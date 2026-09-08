@@ -4,4 +4,12 @@ generator client {
 
 datasource db {
   provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model Task {
+  id        Int     @id @default(autoincrement())
+  body      String
+  completed Boolean
+  priority  Int
 }
