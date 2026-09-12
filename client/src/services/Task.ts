@@ -6,7 +6,7 @@ const axios = Axios.create({
 
 export const fetchTasks = async () => {
     try {
-        const response = await axios.get("/tasks");
+        const response = await axios.get("/tasks")
         return response.data;
     } catch (error) {
         console.log("Error service/fetchTasks: ", error);
@@ -19,7 +19,7 @@ export const createTask = async (payload: {
     priority: number;
 }) => {
     try {
-        const response = await axios.post("/task/create", payload);
+        const response = await axios.post("/tasks", payload);
         return response.data;
     } catch (error) {
         console.log("Error service/createTask: ", error);
@@ -29,7 +29,7 @@ export const createTask = async (payload: {
 
 export const editTask = async (id: number, completed: boolean) => {
     try {
-        const response = await axios.patch("/task/edit/" + id, {
+        const response = await axios.patch("/tasks/" + id, {
             completed,
         });
         return response.data;

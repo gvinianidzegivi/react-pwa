@@ -29,9 +29,12 @@ export const Tasks = () => {
     }
   };
 
+
+
   useEffect(() => {
     getTasks();
   }, []);
+
 
   return (
     <Layout>

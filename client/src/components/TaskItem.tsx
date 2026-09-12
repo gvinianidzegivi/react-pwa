@@ -12,7 +12,6 @@ type PropsType = {
 
 export const TaskItem = ({ id, body, priority, completed, onCheck }: PropsType) => {
     const syncCheck = async (taskCompleted: boolean) => {
-        console.log(id);
         try {
             await editTask(id, taskCompleted);
             onCheck(taskCompleted);
