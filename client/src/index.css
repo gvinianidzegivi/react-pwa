@@ -9,11 +9,7 @@ body {
 /* animations */
 
 .fadeIn {
-  animation: 0.3s fadeIn forwards;
-}
-
-.fadeOut {
-  animation: 0.3s fadeOut forwards;
+  animation: 0.3s ease-out fadeIn;
 }
 
 @keyframes fadeIn {
@@ -28,14 +24,3 @@ body {
   }
 }
 
-@keyframes fadeOut {
-  from {
-    opacity: 1;
-    transform: translate(0, 0);
-  }
-
-  to {
-    opacity: 0;
-    transform: translate(-20px, 0);
-  }
-}

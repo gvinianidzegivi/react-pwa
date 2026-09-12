@@ -1,6 +1,6 @@
 import toast from "react-hot-toast";
-import { MdComment } from "react-icons/md";
 import { editTask } from "../services/Task";
+import { MessageSquareText } from "lucide-react";
 
 type PropsType = {
     id: number;
@@ -46,7 +46,7 @@ export const TaskItem = ({ id, body, priority, completed, onCheck }: PropsType) 
 
             <div className="mt-4 w-fit ml-auto flex gap-2">
                 <div className="text-sm flex">
-                    <MdComment className="my-auto mr-2" />
+                    <MessageSquareText className="my-auto mr-2" />
                     <span className="inline-block my-auto">4</span>
                 </div>
             </div>
