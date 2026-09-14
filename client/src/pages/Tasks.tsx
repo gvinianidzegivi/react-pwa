@@ -1,9 +1,9 @@
+import { Plus } from "lucide-react";
 import { useEffect, useState } from "react";
-import { IoAdd } from "react-icons/io5";
 import { Link } from "react-router";
-import { fetchTasks } from "../services/Task";
 import { Layout } from "../components/Layout";
 import { TaskItem } from "../components/TaskItem";
+import { fetchTasks } from "../services/Task";
 
 type TaskType = {
   id: number;
@@ -29,10 +29,13 @@ export const Tasks = () => {
     }
   };
 
-
-
   useEffect(() => {
-    getTasks();
+    const loadTasks = async () => {
+      const tasks = await fetchTasks();
+      setTasks(tasks);
+    };
+
+    loadTasks();
   }, []);
 
 
@@ -54,7 +57,7 @@ export const Tasks = () => {
           className="bg-yellow-200 flex rounded-full h-fit my-auto p-2
         text-black ml-auto"
         >
-          <IoAdd className="text-xl" />
+          <Plus className="text-xl" />
         </Link>
       </div>
 
@@ -73,4 +76,3 @@ export const Tasks = () => {
     </Layout>
   );
 }
-
