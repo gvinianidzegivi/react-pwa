@@ -17,8 +17,7 @@ app.get("/tasks", async (req: Request, res: Response) => {
 });
 
 app.post("/tasks", async (req: Request, res: Response) => {
-  const body = req.body.body;
-  const priority = +req.body.priority;
+  const { body, priority } = req.body;
   if (!body || !priority) {
     return res.status(400).send({
       error: "Request payload is not valid. Body and priority are required.",
@@ -26,8 +25,8 @@ app.post("/tasks", async (req: Request, res: Response) => {
   }
   const newTask = await prisma.task.create({
     data: {
-      body: body,
-      priority: priority,
+      body,
+      priority: +priority,
       completed: false,
     },
   });
@@ -36,9 +35,10 @@ app.post("/tasks", async (req: Request, res: Response) => {
 });
 
 app.patch("/tasks/:id", async (req: Request<{ id: string }>, res: Response) => {
-  const id = req.params.id;
-  const completed = req.body.completed;
-  if (completed === undefined) {
+  const { id } = req.params;
+  const { completed } = req.body;
+
+  if (!completed) {
     return res.status(400).send({
       error: "Request payload is not valid. Completed is required.",
     });
@@ -48,7 +48,7 @@ app.patch("/tasks/:id", async (req: Request<{ id: string }>, res: Response) => {
     where: {
       id: +id,
     },
-    data: {
+    data: { 
       completed,
     },
   });

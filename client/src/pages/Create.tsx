@@ -5,14 +5,14 @@ import { createTask } from "../services/Task";
 import { Layout } from "../components/Layout";
 import { ArrowLeft } from "lucide-react";
 
+const inputClassName =
+  "border w-full mb-2 border-solid border-gray-400 bg-transparent p-3 rounded-xl";
+
 export const Create = () => {
   const [form, setForm] = useState({
     priority: 1,
     body: "",
   });
-
-  const inputClassName =
-    "border w-full mb-2 border-solid border-gray-400 bg-transparent p-3 rounded-xl";
 
   const handleForm = async (e: FormEvent) => {
     e.preventDefault();
