@@ -3,15 +3,11 @@ import { cleanupOutdatedCaches, precacheAndRoute } from "workbox-precaching";
 import { NavigationRoute, Route, registerRoute } from "workbox-routing";
 import { CacheFirst, NetworkFirst, NetworkOnly } from "workbox-strategies";
 
-declare let self: ServiceWorkerGlobalScope & {
-  skipWaiting(): Promise<void>;
-};
+declare let self: ServiceWorkerGlobalScope;
 
 cleanupOutdatedCaches();
 
 precacheAndRoute(self.__WB_MANIFEST);
-
-self.skipWaiting();
 
 const imageRoute = new Route(
   ({ request, sameOrigin }) => {
@@ -22,6 +18,16 @@ const imageRoute = new Route(
   }),
 );
 registerRoute(imageRoute);
+
+const fontRoute = new Route(
+  ({ request, sameOrigin }) => {
+    return sameOrigin && request.destination === "font";
+  },
+  new CacheFirst({
+    cacheName: "fonts",
+  }),
+);
+registerRoute(fontRoute);
 
 const fetchTasksRoute = new Route(
   ({ request }) => {

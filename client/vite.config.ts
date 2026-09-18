@@ -51,6 +51,9 @@ export default defineConfig({
         display: "standalone",
         orientation: "portrait",
       },
+      workbox: {
+        globPatterns: ["**/*.{js,css,html,ico,png,svg,json,woff,woff2}"],
+      },
     }),
   ],
 });
