@@ -38,7 +38,7 @@ app.patch("/tasks/:id", async (req: Request<{ id: string }>, res: Response) => {
   const { id } = req.params;
   const { completed } = req.body;
 
-  if (!completed) {
+  if (completed === undefined) {
     return res.status(400).send({
       error: "Request payload is not valid. Completed is required.",
     });
@@ -48,7 +48,7 @@ app.patch("/tasks/:id", async (req: Request<{ id: string }>, res: Response) => {
     where: {
       id: +id,
     },
-    data: { 
+    data: {
       completed,
     },
   });
