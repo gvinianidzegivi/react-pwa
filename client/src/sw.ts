@@ -1,16 +1,17 @@
-import { NavigationRoute, registerRoute, Route } from "workbox-routing";
-import { skipWaiting } from "workbox-core";
-import { cleanupOutdatedCaches, precacheAndRoute } from "workbox-precaching";
-import { CacheFirst, NetworkFirst, NetworkOnly } from "workbox-strategies";
 import { BackgroundSyncPlugin } from "workbox-background-sync";
+import { cleanupOutdatedCaches, precacheAndRoute } from "workbox-precaching";
+import { NavigationRoute, Route, registerRoute } from "workbox-routing";
+import { CacheFirst, NetworkFirst, NetworkOnly } from "workbox-strategies";
 
-declare let self: ServiceWorkerGlobalScope;
+declare let self: ServiceWorkerGlobalScope & {
+  skipWaiting(): Promise<void>;
+};
 
 cleanupOutdatedCaches();
 
 precacheAndRoute(self.__WB_MANIFEST);
 
-skipWaiting();
+self.skipWaiting();
 
 const imageRoute = new Route(
   ({ request, sameOrigin }) => {
@@ -20,7 +21,6 @@ const imageRoute = new Route(
     cacheName: "images",
   }),
 );
-
 registerRoute(imageRoute);
 
 const fetchTasksRoute = new Route(
@@ -47,7 +47,7 @@ const bgSyncPlugin = new BackgroundSyncPlugin("backgroundSyncQueue", {
 
 const taskSubmitRoute = new Route(
   ({ request }) => {
-    return request.url === import.meta.env.VITE_API_BASE_URL + "/task/create";
+    return request.url === import.meta.env.VITE_API_BASE_URL + "/tasks";
   },
   new NetworkOnly({
     plugins: [bgSyncPlugin],
@@ -58,7 +58,7 @@ registerRoute(taskSubmitRoute);
 
 const editTaskRoute = new Route(
   ({ request }) => {
-    return request.url.includes(import.meta.env.VITE_API_BASE_URL + "/task");
+    return request.url.includes(import.meta.env.VITE_API_BASE_URL + "/tasks");
   },
   new NetworkOnly({
     plugins: [bgSyncPlugin],

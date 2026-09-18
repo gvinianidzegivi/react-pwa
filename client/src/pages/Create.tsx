@@ -21,11 +21,11 @@ export const Create = () => {
       await createTask(form);
       resetForm();
       toast.success("Task Created");
-    } catch (err) {
+    } catch {
       if (!navigator.onLine) {
         resetForm();
         return toast.success(
-          "You're offline. We'll save the changes when you're online!"
+          "You're offline. We'll save the changes when you're online!",
         );
       }
       toast.error("Error creating task");
@@ -88,5 +88,4 @@ export const Create = () => {
       </form>
     </Layout>
   );
-}
-
+};

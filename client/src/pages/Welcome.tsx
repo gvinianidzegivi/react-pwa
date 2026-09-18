@@ -1,7 +1,7 @@
 import { Link } from "react-router";
 import { Layout } from "../components/Layout";
 import { ArrowRight } from "lucide-react";
-import imageSrc from '../assets/welcome.svg'
+import imageSrc from "../assets/welcome.svg";
 
 export const Welcome = () => {
   return (
@@ -9,7 +9,7 @@ export const Welcome = () => {
       <div className="h-screen flex flex-col">
         <div className="max-w-96 mx-auto my-auto">
           <div className="mx-auto pt-10">
-            <img src={imageSrc} alt="Wellcome Page" />
+            <img src={imageSrc} alt="Welcome Page" />
           </div>
 
           <div className="mt-10">
