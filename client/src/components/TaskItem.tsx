@@ -3,53 +3,59 @@ import { editTask } from "../services/Task";
 import { MessageSquareText } from "lucide-react";
 
 type PropsType = {
-    id: number;
-    body: string;
-    priority: number;
-    completed: boolean;
-    onCheck: (value: boolean) => void;
+  id: number;
+  body: string;
+  priority: number;
+  completed: boolean;
+  onCheck: (value: boolean) => void;
 };
 
-export const TaskItem = ({ id, body, priority, completed, onCheck }: PropsType) => {
-    const syncCheck = async (taskCompleted: boolean) => {
-        try {
-            await editTask(id, taskCompleted);
-            onCheck(taskCompleted);
-            toast.success("Saved the changes!");
-        } catch (err) {
-            if (!navigator.onLine) {
-                onCheck(taskCompleted);
-                return toast.success(
-                    "You're offline! changes will be synced when you're online again."
-                );
-            }
-            toast.error("Failed to save changes!");
-        }
-    };
+export const TaskItem = ({
+  id,
+  body,
+  priority,
+  completed,
+  onCheck,
+}: PropsType) => {
+  const syncCheck = async (taskCompleted: boolean) => {
+    try {
+      await editTask(id, taskCompleted);
+      onCheck(taskCompleted);
+      toast.success("Saved the changes!");
+    } catch {
+      if (!navigator.onLine) {
+        onCheck(taskCompleted);
+        return toast.success(
+          "You're offline! changes will be synced when you're online again.",
+        );
+      }
+      toast.error("Failed to save changes!");
+    }
+  };
 
-    const handleCheck = () => {
-        syncCheck(!completed);
-    };
+  const handleCheck = () => {
+    syncCheck(!completed);
+  };
 
-    return (
-        <div className="bg-[#1f1f1f] p-5 w-full rounded-xl">
-            <p className="text-gray-400 text-xs">Priority: {priority}</p>
-            <div className="flex w-full mt-2 justify-between">
-                <p className="flex grow text-gray-200 text-xl">{body}</p>
-                <input
-                    onChange={() => handleCheck()}
-                    checked={completed}
-                    type="checkbox"
-                    className="m-5 h-5 inline-block my-auto cursor-pointer"
-                />
-            </div>
+  return (
+    <div className="bg-[#1f1f1f] p-5 w-full rounded-xl">
+      <p className="text-gray-400 text-xs">Priority: {priority}</p>
+      <div className="flex w-full mt-2 justify-between">
+        <p className="flex grow text-gray-200 text-xl">{body}</p>
+        <input
+          onChange={() => handleCheck()}
+          checked={completed}
+          type="checkbox"
+          className="m-5 h-5 inline-block my-auto cursor-pointer"
+        />
+      </div>
 
-            <div className="mt-4 w-fit ml-auto flex gap-2">
-                <div className="text-sm flex">
-                    <MessageSquareText className="my-auto mr-2" />
-                    <span className="inline-block my-auto">4</span>
-                </div>
-            </div>
+      <div className="mt-4 w-fit ml-auto flex gap-2">
+        <div className="text-sm flex">
+          <MessageSquareText className="my-auto mr-2" />
+          <span className="inline-block my-auto">4</span>
         </div>
-    );
-}
+      </div>
+    </div>
+  );
+};
